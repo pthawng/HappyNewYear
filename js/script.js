@@ -204,7 +204,7 @@ const store = {
 			autoLaunch: true, //自动发射烟花
 			finale: false, //同时放更多烟花 (mặc định bỏ tích, finale sẽ do hệ thống tự chèn)
 			skyLighting: SKY_LIGHT_NORMAL + "",
-			hideControls: IS_HEADER,
+			hideControls: IS_HEADER || IS_MOBILE, // Ẩn nút điều khiển trên mobile cho thoáng
 			longExposure: false,
 			scaleFactor: getDefaultScaleFactor(),
 		},
@@ -1652,11 +1652,15 @@ function startSequence() {
 		return seqPyramid();
 	}
 
+	// Mobile: Ưu tiên bắn đơn hoặc đôi, tránh bắn chùm gây lag
+	if (IS_MOBILE) {
+		if (rand < 0.8) return seqRandomShell(); // 80% bắn đơn
+		return seqTwoRandom(); // 20% bắn đôi
+	}
+
 	// Ưu tiên kiểu mixed group để cảm giác phong phú hơn
 	if (rand < 0.5 && !IS_HEADER) {
 		sequencesSinceFinale++;
-		// Mobile: giảm khả năng ra mixed group nặng
-		if (IS_MOBILE && Math.random() < 0.5) return seqRandomShell();
 		return seqMixedGroup();
 	} else if (rand < 0.8 && !IS_HEADER) {
 		sequencesSinceFinale++;
@@ -2521,8 +2525,8 @@ class Shell {
 		}
 
 		if (IS_MOBILE) {
-			this.starLife *= 0.8; // Giảm thời gian sống của hạt để giải phóng bộ nhớ nhanh hơn
-			this.starCount *= 0.7; // Giảm thêm số lượng hạt ở cấp độ Shell
+			this.starLife *= 0.7; // Giảm mạnh thời gian sống (nhanh biến mất)
+			this.starCount *= 0.5; // Giảm mạnh số lượng hạt (chỉ còn 50%)
 		}
 	}
 
