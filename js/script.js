@@ -905,15 +905,15 @@ function startWishesLoop() {
 	// Responsive: điều chỉnh timing và số lượng cho mobile
 	const isMobile = window.innerWidth <= 768;
 	const initialDelay = isMobile ? 1000 : 700; // Mobile: chậm hơn
-	const intervalDelay = isMobile ? 2500 : 1400; // Mobile: thưa hơn nhiều để giảm lag
+	const intervalDelay = isMobile ? 2500 : 2000; // Desktop: tăng lên 2000 để bớt dồn dập
 	const betweenDelay = isMobile ? 800 : 300; // Mobile: delay giữa các câu dài hơn
 
 	// Bắn vài câu đầu cho nhanh
 	const initialCount = isMobile ? 3 : 4; // Mobile: ít hơn một chút
 	for (let i = 0; i < initialCount; i++) {
 		setTimeout(spawnWishMessage, i * initialDelay);
-		// Random có ảnh bay lên cùng không (60% cơ hội)
-		if (Math.random() < 0.6 && loadedImages.length > 0) {
+		// Random có ảnh bay lên cùng không (Mobile 60%, Desktop 30%)
+		if (Math.random() < (isMobile ? 0.6 : 0.3) && loadedImages.length > 0) {
 			setTimeout(spawnWishImage, i * initialDelay + 200);
 		}
 	}
@@ -927,11 +927,11 @@ function startWishesLoop() {
 		}
 		const count = isMobile
 			? 1 + ((Math.random() * 2) | 0)  // Mobile: 1-2 câu
-			: 1 + ((Math.random() * 3) | 0); // Desktop: 1-3 câu
+			: 1 + ((Math.random() * 2) | 0); // Desktop: Giảm xuống 1-2 câu (trước là 1-3)
 		for (let i = 0; i < count; i++) {
 			setTimeout(spawnWishMessage, i * betweenDelay);
-			// Random có ảnh bay lên cùng không (60% cơ hội)
-			if (Math.random() < 0.6 && loadedImages.length > 0) {
+			// Random có ảnh bay lên cùng không (Mobile 60%, Desktop 30%)
+			if (Math.random() < (isMobile ? 0.6 : 0.3) && loadedImages.length > 0) {
 				setTimeout(spawnWishImage, i * betweenDelay + 200);
 			}
 		}
@@ -2617,7 +2617,7 @@ class Shell {
 			// Responsive: giảm tỷ lệ xuất hiện ảnh trên mobile
 			const isMobile = window.innerWidth <= 768;
 			// Desktop: 30% sẽ có ảnh, Mobile: 70% (theo yêu cầu)
-			const imageChance = isMobile ? 0.7 : 0.5;
+			const imageChance = isMobile ? 0.7 : 0.3;
 			const willShowImage = Math.random() < imageChance;
 
 			if (willShowImage) {
