@@ -549,7 +549,7 @@ const WISH_MESSAGES = [
 	"Năm mới an khang thịnh vượng",
 	"Năm mới bình an",
 	"Chúc mọi điều ước của cậu đều trở thành hiện thực ✨",
-	"Chúc gia đình luôn bình an và hạnh phúc ❤️",
+	"Chúc cậu luôn bình an và hạnh phúc ❤️",
 	"Chúc cậu luôn khỏe mạnh và tràn đầy năng lượng 💪",
 	"Chúc công việc thuận lợi, thăng tiến không ngừng 🚀",
 	"Chúc cậu luôn mỉm cười và yêu đời mỗi ngày 😊",
