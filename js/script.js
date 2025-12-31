@@ -14,7 +14,7 @@ const IS_HIGH_END_DEVICE = (() => {
 		return false;
 	}
 
-	const minCount = window.innerWidth <= 1024 ? 4 : 8;
+	const minCount = window.innerWidth <= 1024 ? 8 : 8;
 	return hwConcurrency >= minCount;
 })();
 
@@ -24,7 +24,7 @@ const GRAVITY = 0.9; //以像素/秒为单位的加速度
 let simSpeed = 1;
 
 function getDefaultScaleFactor() {
-	if (IS_MOBILE) return 0.6; // Lower resolution for better performance
+	if (IS_MOBILE) return 0.5; // Lower resolution for better performance
 	if (IS_HEADER) return 0.75;
 	return 1;
 }
@@ -108,7 +108,7 @@ function addImageBurst(x, y, baseSize = 200) {
 
 	// Responsive: giảm kích thước trên mobile
 	const isMobile = window.innerWidth <= 768;
-	const adjustedBaseSize = isMobile ? baseSize * 0.8 : baseSize; // Tăng lên 80% (trước là 60%)
+	const adjustedBaseSize = isMobile ? baseSize * 0.6 : baseSize; // Tăng lên 80% (trước là 60%)
 	const size = adjustedBaseSize * (0.6 + Math.random() * 0.8);
 
 	// Random: một số sẽ rơi xuống, một số sẽ biến mất ngay
@@ -193,7 +193,7 @@ const store = {
 		//请注意，用于<select>的配置值必须是字符串，除非手动将值转换为字符串
 		//在呈现时，并在更改时解析。
 		config: {
-			quality: String(IS_HIGH_END_DEVICE ? QUALITY_HIGH : QUALITY_NORMAL), // will be mirrored to a global variable named `quality` in `configDidUpdate`, for perf.
+			quality: String(IS_MOBILE ? QUALITY_LOW : (IS_HIGH_END_DEVICE ? QUALITY_HIGH : QUALITY_NORMAL)), // will be mirrored to a global variable named `quality` in `configDidUpdate`, for perf.
 			shell: "Random",
 			size: IS_DESKTOP
 				? "3" // Desktop default
@@ -1105,7 +1105,8 @@ const crysanthemumShell = (size = 1) => {
 	const secondColor = singleColor && (Math.random() < 0.2 || color === COLOR.White) ? pistilColor || randomColor({ notColor: color, limitWhite: true }) : null;
 	const streamers = !pistil && color !== COLOR.White && Math.random() < 0.42;
 	let starDensity = glitter ? 1.1 : 1.25;
-	if (isLowQuality) starDensity *= 0.8;
+	if (isLowQuality) starDensity *= 0.6;
+	if (IS_MOBILE) starDensity *= 0.8;
 	if (isHighQuality) starDensity = 1.2;
 	return {
 		shellSize: size,
@@ -1246,7 +1247,7 @@ const crackleShell = (size = 1) => {
 	return {
 		shellSize: size,
 		spreadSize: 380 + size * 75,
-		starDensity: isLowQuality ? 0.65 : 1,
+		starDensity: isLowQuality ? 0.4 : 1, // Reduced from 0.65
 		starLife: 600 + size * 100,
 		starLifeVariation: 0.32,
 		glitter: "light",
@@ -1654,6 +1655,8 @@ function startSequence() {
 	// Ưu tiên kiểu mixed group để cảm giác phong phú hơn
 	if (rand < 0.5 && !IS_HEADER) {
 		sequencesSinceFinale++;
+		// Mobile: giảm khả năng ra mixed group nặng
+		if (IS_MOBILE && Math.random() < 0.5) return seqRandomShell();
 		return seqMixedGroup();
 	} else if (rand < 0.8 && !IS_HEADER) {
 		sequencesSinceFinale++;
@@ -2676,6 +2679,7 @@ class Shell {
 
 		// Apply quality to spark count
 		sparkFreq = sparkFreq / quality;
+		if (IS_MOBILE) sparkFreq *= 1.5; // Reduce sparks on mobile by increasing delay
 
 		// Star factory for primary burst, pistils, and streamers.
 		//星形工厂，用于生产初级爆破、雌蕊和流光。
