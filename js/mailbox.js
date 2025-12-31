@@ -41,11 +41,11 @@
                 <div class="card-right">
                     <div class="card-header">
                         <span class="heart-icon">🧡</span> 
-                       <h3 class="card-title" style="margin:0; border:none;">Chúc mừng năm mới !</h3>
+                       <h3 class="card-title" style="margin:0; border:none;">Chúc mừng năm mới</h3>
                     </div>
                     <div class="wishes-text">
                         Giao thừa rồi, chúc Thư năm mới thật nhiều sức khỏe, luôn vui vẻ và bình an. Chúc năm nay sẽ mang đến cho Thư thật nhiều điều tốt đẹp, mọi việc đều thuận lợi và nhẹ nhàng hơn.
-Chúc một năm mới thật an yên, hy vọng mọi điều tốt lành sẽ đến với em ✨
+                        Chúc một năm mới thật an yên, hy vọng mọi điều tốt lành sẽ đến ✨
                     </div>
                 </div>
             </div>

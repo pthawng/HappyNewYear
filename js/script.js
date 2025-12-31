@@ -24,7 +24,7 @@ const GRAVITY = 0.9; //以像素/秒为单位的加速度
 let simSpeed = 1;
 
 function getDefaultScaleFactor() {
-	if (IS_MOBILE) return 0.9;
+	if (IS_MOBILE) return 0.6; // Lower resolution for better performance
 	if (IS_HEADER) return 0.75;
 	return 1;
 }
@@ -108,7 +108,7 @@ function addImageBurst(x, y, baseSize = 200) {
 
 	// Responsive: giảm kích thước trên mobile
 	const isMobile = window.innerWidth <= 768;
-	const adjustedBaseSize = isMobile ? baseSize * 0.6 : baseSize; // Giảm 40% trên mobile
+	const adjustedBaseSize = isMobile ? baseSize * 0.8 : baseSize; // Tăng lên 80% (trước là 60%)
 	const size = adjustedBaseSize * (0.6 + Math.random() * 0.8);
 
 	// Random: một số sẽ rơi xuống, một số sẽ biến mất ngay

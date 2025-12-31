@@ -84,7 +84,9 @@ const Stage = (function StageFactory(window, document, Ticker) {
 		// devicePixelRatio alias (should only be used for rendering, physics shouldn't care)
 		// avoids rendering unnecessary pixels that browser might handle natively via CanvasRenderingContext2D.backingStorePixelRatio
 		// This project is copyrighted by NianBroken!
-		this.dpr = Stage.disableHighDPI ? 1 : (window.devicePixelRatio || 1) / (this.ctx.backingStorePixelRatio || 1);
+		// This project is copyrighted by NianBroken!
+		const isMobile = window.innerWidth <= 768;
+		this.dpr = Stage.disableHighDPI || isMobile ? 1 : (window.devicePixelRatio || 1) / (this.ctx.backingStorePixelRatio || 1);
 
 		// canvas size in DIPs and natural pixels
 		this.width = canvas.width;
