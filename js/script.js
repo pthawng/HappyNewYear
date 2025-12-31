@@ -108,7 +108,7 @@ function addImageBurst(x, y, baseSize = 200) {
 
 	// Responsive: giảm kích thước trên mobile
 	const isMobile = window.innerWidth <= 768;
-	const adjustedBaseSize = isMobile ? baseSize * 0.6 : baseSize; // Tăng lên 80% (trước là 60%)
+	const adjustedBaseSize = isMobile ? baseSize * 0.9 : baseSize; // Tăng lên 90% (trước là 60%)
 	const size = adjustedBaseSize * (0.6 + Math.random() * 0.8);
 
 	// Random: một số sẽ rơi xuống, một số sẽ biến mất ngay
@@ -199,7 +199,7 @@ const store = {
 				? "3" // Desktop default
 				: IS_HEADER
 					? "1.2" //配置文件头默认值(不必是int)
-					: "2", //手机默认
+					: "4", //手机默认 (Tăng từ 2 lên 4 để pháo to hơn)
 			wordShell: true, //文字烟花 默认为开启 若不开启可修改为false
 			autoLaunch: true, //自动发射烟花
 			finale: false, //同时放更多烟花 (mặc định bỏ tích, finale sẽ do hệ thống tự chèn)
@@ -912,8 +912,8 @@ function startWishesLoop() {
 	const initialCount = isMobile ? 3 : 4; // Mobile: ít hơn một chút
 	for (let i = 0; i < initialCount; i++) {
 		setTimeout(spawnWishMessage, i * initialDelay);
-		// Random có ảnh bay lên cùng không (30% cơ hội)
-		if (Math.random() < 0.3 && loadedImages.length > 0) {
+		// Random có ảnh bay lên cùng không (80% cơ hội - tăng theo yêu cầu)
+		if (Math.random() < 0.8 && loadedImages.length > 0) {
 			setTimeout(spawnWishImage, i * initialDelay + 200);
 		}
 	}
@@ -930,8 +930,8 @@ function startWishesLoop() {
 			: 1 + ((Math.random() * 3) | 0); // Desktop: 1-3 câu
 		for (let i = 0; i < count; i++) {
 			setTimeout(spawnWishMessage, i * betweenDelay);
-			// Random có ảnh bay lên cùng không (30% cơ hội)
-			if (Math.random() < 0.3 && loadedImages.length > 0) {
+			// Random có ảnh bay lên cùng không (80% cơ hội - tăng theo yêu cầu)
+			if (Math.random() < 0.8 && loadedImages.length > 0) {
 				setTimeout(spawnWishImage, i * betweenDelay + 200);
 			}
 		}
@@ -2611,8 +2611,8 @@ class Shell {
 		if (imageBurstEnabled && !isFinalePhase && (!hasActiveWishes() || wishesStopped)) {
 			// Responsive: giảm tỷ lệ xuất hiện ảnh trên mobile
 			const isMobile = window.innerWidth <= 768;
-			// Desktop: 30% sẽ có ảnh, Mobile: Tăng lên 50% theo yêu cầu (nhưng đã giảm particle bù lại)
-			const imageChance = isMobile ? 0.5 : 0.3;
+			// Desktop: 30% sẽ có ảnh, Mobile: Tăng mạnh lên 90% theo yêu cầu
+			const imageChance = isMobile ? 0.9 : 0.5;
 			const willShowImage = Math.random() < imageChance;
 
 			if (willShowImage) {
