@@ -912,8 +912,8 @@ function startWishesLoop() {
 	const initialCount = isMobile ? 3 : 4; // Mobile: ít hơn một chút
 	for (let i = 0; i < initialCount; i++) {
 		setTimeout(spawnWishMessage, i * initialDelay);
-		// Random có ảnh bay lên cùng không (80% cơ hội - tăng theo yêu cầu)
-		if (Math.random() < 0.8 && loadedImages.length > 0) {
+		// Random có ảnh bay lên cùng không (60% cơ hội)
+		if (Math.random() < 0.6 && loadedImages.length > 0) {
 			setTimeout(spawnWishImage, i * initialDelay + 200);
 		}
 	}
@@ -930,8 +930,8 @@ function startWishesLoop() {
 			: 1 + ((Math.random() * 3) | 0); // Desktop: 1-3 câu
 		for (let i = 0; i < count; i++) {
 			setTimeout(spawnWishMessage, i * betweenDelay);
-			// Random có ảnh bay lên cùng không (80% cơ hội - tăng theo yêu cầu)
-			if (Math.random() < 0.8 && loadedImages.length > 0) {
+			// Random có ảnh bay lên cùng không (60% cơ hội)
+			if (Math.random() < 0.6 && loadedImages.length > 0) {
 				setTimeout(spawnWishImage, i * betweenDelay + 200);
 			}
 		}
@@ -2611,8 +2611,8 @@ class Shell {
 		if (imageBurstEnabled && !isFinalePhase && (!hasActiveWishes() || wishesStopped)) {
 			// Responsive: giảm tỷ lệ xuất hiện ảnh trên mobile
 			const isMobile = window.innerWidth <= 768;
-			// Desktop: 30% sẽ có ảnh, Mobile: Tăng mạnh lên 90% theo yêu cầu
-			const imageChance = isMobile ? 0.9 : 0.5;
+			// Desktop: 30% sẽ có ảnh, Mobile: 70% (theo yêu cầu)
+			const imageChance = isMobile ? 0.7 : 0.5;
 			const willShowImage = Math.random() < imageChance;
 
 			if (willShowImage) {
