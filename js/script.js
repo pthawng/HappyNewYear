@@ -1652,10 +1652,11 @@ function startSequence() {
 		return seqPyramid();
 	}
 
-	// Mobile: Ưu tiên bắn đơn hoặc đôi, tránh bắn chùm gây lag
+	// Mobile: Tăng mật độ pháo (theo yêu cầu) - Cho phép bắn đôi và bắn ba
 	if (IS_MOBILE) {
-		if (rand < 0.8) return seqRandomShell(); // 80% bắn đơn
-		return seqTwoRandom(); // 20% bắn đôi
+		if (rand < 0.3) return seqRandomShell(); // 30% bắn đơn (giảm từ 80%)
+		if (rand < 0.8) return seqTwoRandom();   // 50% bắn đôi (tăng từ 20%)
+		return seqTriple();                      // 20% bắn ba (mới thêm)
 	}
 
 	// Ưu tiên kiểu mixed group để cảm giác phong phú hơn
