@@ -580,8 +580,8 @@ function spawnWishMessage() {
 	const leftPercent = minX + Math.random() * (maxX - minX);
 	wrapper.style.left = leftPercent + "%";
 
-	// Thời gian bay (6–10s)
-	const duration = 6 + Math.random() * 4;
+	// Thời gian bay chậm hơn (10-15s)
+	const duration = 10 + Math.random() * 5;
 	wrapper.style.animationDuration = duration + "s";
 
 	// Cho phép thao tác tay trên inner - xoay/thu phóng toàn bộ không gian (3D camera)
@@ -904,9 +904,9 @@ function startWishesLoop() {
 
 	// Responsive: điều chỉnh timing và số lượng cho mobile
 	const isMobile = window.innerWidth <= 768;
-	const initialDelay = isMobile ? 600 : 700; // Mobile: nhanh hơn một chút
-	const intervalDelay = isMobile ? 1200 : 1400; // Mobile: interval ngắn hơn
-	const betweenDelay = isMobile ? 250 : 300; // Mobile: delay giữa các câu ngắn hơn
+	const initialDelay = isMobile ? 1000 : 700; // Mobile: chậm hơn
+	const intervalDelay = isMobile ? 2500 : 1400; // Mobile: thưa hơn nhiều để giảm lag
+	const betweenDelay = isMobile ? 800 : 300; // Mobile: delay giữa các câu dài hơn
 
 	// Bắn vài câu đầu cho nhanh
 	const initialCount = isMobile ? 3 : 4; // Mobile: ít hơn một chút
@@ -1106,7 +1106,7 @@ const crysanthemumShell = (size = 1) => {
 	const streamers = !pistil && color !== COLOR.White && Math.random() < 0.42;
 	let starDensity = glitter ? 1.1 : 1.25;
 	if (isLowQuality) starDensity *= 0.6;
-	if (IS_MOBILE) starDensity *= 0.8;
+	if (IS_MOBILE) starDensity *= 0.5; // Giảm mạnh số lượng hạt (50%)
 	if (isHighQuality) starDensity = 1.2;
 	return {
 		shellSize: size,
@@ -2519,6 +2519,11 @@ class Shell {
 			const scaledSize = this.spreadSize / 54;
 			this.starCount = Math.max(6, scaledSize * scaledSize * density);
 		}
+
+		if (IS_MOBILE) {
+			this.starLife *= 0.8; // Giảm thời gian sống của hạt để giải phóng bộ nhớ nhanh hơn
+			this.starCount *= 0.7; // Giảm thêm số lượng hạt ở cấp độ Shell
+		}
 	}
 
 	/**
@@ -2606,8 +2611,8 @@ class Shell {
 		if (imageBurstEnabled && !isFinalePhase && (!hasActiveWishes() || wishesStopped)) {
 			// Responsive: giảm tỷ lệ xuất hiện ảnh trên mobile
 			const isMobile = window.innerWidth <= 768;
-			// Desktop: 30% sẽ có ảnh, Mobile: chỉ 15% sẽ có ảnh (thỉnh thoảng mới có)
-			const imageChance = isMobile ? 0.15 : 0.3;
+			// Desktop: 30% sẽ có ảnh, Mobile: Tăng lên 50% theo yêu cầu (nhưng đã giảm particle bù lại)
+			const imageChance = isMobile ? 0.5 : 0.3;
 			const willShowImage = Math.random() < imageChance;
 
 			if (willShowImage) {
@@ -2675,6 +2680,14 @@ class Shell {
 			sparkSpeed = 0.34;
 			sparkLife = 1400;
 			sparkLifeVariation = 3.8;
+		}
+
+		if (IS_MOBILE && this.glitter) {
+			// Trên mobile, nếu glitter quá nặng, chuyển về light hoặc medium
+			if (this.glitter === "heavy" || this.glitter === "thick") {
+				this.glitter = "medium";
+				sparkFreq = 200; // Reset thông số cho medium
+			}
 		}
 
 		// Apply quality to spark count
