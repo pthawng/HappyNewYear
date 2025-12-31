@@ -489,6 +489,10 @@
         /* Translucent paper to see hints of background */
         background: rgba(253, 245, 230, 0.95);
         backdrop-filter: blur(2px);
+        overflow-y: auto;
+        /* Enable scrolling for the whole right card if needed */
+        -webkit-overflow-scrolling: touch;
+        /* Smooth scrolling on iOS */
     }
 
     .card-header {
@@ -568,6 +572,10 @@ body.modal-open {
     padding: 10px;
     overflow-y: auto;
     /* Allow scrolling if text is too long */
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling on iOS */
+    max-height: 100%;
+    /* Ensure it doesn't overflow parent */
 }
 
 @media (max-width: 768px) {
