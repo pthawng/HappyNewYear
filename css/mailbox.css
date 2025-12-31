@@ -1,0 +1,577 @@
+/* Mailbox Icon Wrapper */
+.mailbox-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: slideInUp 0.8s ease-out 1s backwards;
+    /* Entrance animation */
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px) rotate(10deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+    }
+}
+
+.mailbox-wrapper:hover {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+.mailbox-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #d32f2f, #b71c1c);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 2px solid #ffd700;
+    position: relative;
+    overflow: visible;
+    -webkit-tap-highlight-color: transparent;
+    /* Remove blue highlight on mobile */
+
+}
+
+/* Envelope wobble animation */
+@keyframes wobble {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-10deg);
+    }
+
+    75% {
+        transform: rotate(10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.mailbox-icon svg {
+    width: 32px;
+    height: 32px;
+    fill: #ffd700;
+    animation: wobble 2s infinite ease-in-out;
+}
+
+/* Notification Badge (Optional for future) */
+/* .mailbox-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ffd700;
+    color: #d32f2f;
+    font-size: 12px;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+} */
+
+/* Modal Overlay */
+.mailbox-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    z-index: 2000;
+    display: flex;
+    /* Always flex to allow layout calculation */
+    visibility: hidden;
+    /* Hide visually */
+    pointer-events: none;
+    /* unexpected clicks */
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    -webkit-backdrop-filter: blur(4px);
+    /* Fix for Safari */
+}
+
+.mailbox-modal-overlay.open {
+    visibility: visible;
+    pointer-events: auto;
+    opacity: 1;
+}
+
+/* Greeting Card Container */
+.greeting-card {
+    width: 90%;
+    max-width: 800px;
+    height: 500px;
+    /* Fixed height for the book feel */
+    background: #b71c1c;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    display: flex;
+    overflow: hidden;
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    font-family: 'Dancing Script', cursive;
+    /* Match project font */
+}
+
+.mailbox-modal-overlay.open .greeting-card {
+    transform: scale(1);
+}
+
+/* Close Button */
+.close-card-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: #5a3a29;
+    /* Brownish to match paper */
+    cursor: pointer;
+    z-index: 10;
+    background: none;
+    border: none;
+    font-family: Arial, sans-serif;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.close-card-btn:hover {
+    opacity: 1;
+}
+
+/* Left Panel (Red Cover Style) */
+.card-left {
+    flex: 1;
+    background-color: #b71c1c;
+    /* Base Red */
+    background-image:
+        radial-gradient(circle at 50% 50%, #d32f2f 10%, transparent 10.2%),
+        /* Polka dots or subtle texture */
+        repeating-linear-gradient(90deg, #b71c1c, #b71c1c 20px, #a31515 20px, #a31515 22px);
+    /* Vertical stripes texture */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 2px solid #8e1212;
+    padding: 20px;
+}
+
+/* Decorative Gold Stripes */
+.decoration-stripes {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 15%;
+    width: 10px;
+    border-left: 2px solid #ffd700;
+    border-right: 2px solid #ffd700;
+}
+
+.decoration-stripes::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 40px;
+    /* Another set of lines */
+    width: 6px;
+    border-left: 1px solid #ffd700;
+    border-right: 1px solid #ffd700;
+}
+
+/* Lantern */
+.lantern-decoration {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    width: 60px;
+    height: 80px;
+    background: radial-gradient(circle, #ff5252, #b71c1c);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+.lantern-decoration::before {
+    /* Gold trim top */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    width: 70%;
+    height: 6px;
+    background: #ffd700;
+    border-radius: 2px;
+}
+
+.lantern-decoration::after {
+    /* Gold trim bottom */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    width: 70%;
+    height: 6px;
+    background: #ffd700;
+    border-radius: 2px;
+}
+
+.lantern-tassel {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background: #ffd700;
+}
+
+/* Happy New Year Circle Badge */
+.year-badge-container {
+    width: 180px;
+    height: 180px;
+    border: 4px solid #ffd700;
+    /* Gold Ring */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #7f0000;
+    /* Darker red inside */
+    box-shadow: 0 0 0 6px #b71c1c, 0 0 0 8px #ffd700;
+    /* Double border effect */
+    z-index: 3;
+    text-align: center;
+}
+
+.year-text {
+    color: #ffd700;
+    font-family: 'Dancing Script', cursive;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.year-text h2 {
+    font-size: 2.2em;
+    margin: 0;
+    line-height: 1.1;
+    font-weight: bold;
+}
+
+.year-text span {
+    font-size: 2.5em;
+    font-weight: bold;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Flowers (CSS shapes) */
+.flower {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.flower.f1 {
+    top: 20px;
+    right: 40px;
+    transform: scale(0.8);
+}
+
+.flower.f2 {
+    bottom: 40px;
+    left: 30px;
+    transform: scale(1.2);
+}
+
+.flower::before,
+.flower::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+}
+
+.flower::before {
+    transform: translateX(15px);
+}
+
+.flower::after {
+    transform: translateX(7.5px) translateY(12px);
+}
+
+.flower-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(0, 5px);
+    /* Adjusted for simple flower shape hack */
+    width: 8px;
+    height: 8px;
+    background: #ffd700;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+
+/* Right Panel (Paper Style) */
+.card-right {
+    flex: 1.2;
+    background: #fdf5e6;
+    /* Old paper color */
+    padding: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    /* Paper texture effect */
+    background-image: linear-gradient(#fdf5e6 95%, #e0d0b0 100%);
+    background-size: 100% 30px;
+    /* Lined paper feel */
+}
+
+/* Card Header: "Gửi em !" */
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: #3e2723;
+}
+
+.heart-icon {
+    color: #d32f2f;
+    /* Red Heart */
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.card-title {
+    font-size: 2rem;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+    width: 100%;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+}
+
+.card-title-input {
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+    width: 100%;
+    color: #3e2723;
+    outline: none;
+}
+
+.card-title-input::placeholder {
+    color: #3e2723;
+    opacity: 0.6;
+}
+
+/* Wishes Text Area */
+.wishes-input {
+    flex: 1;
+    width: 100%;
+    background: transparent;
+    border: none;
+    resize: none;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: #5d4037;
+    outline: none;
+    text-align: center;
+    /* Center align like lines in the image */
+    padding: 10px;
+}
+
+.wishes-input::placeholder {
+    color: #a1887f;
+    font-style: italic;
+}
+
+/* Responsive & Animation Refinements */
+
+@media (max-width: 768px) {
+    .mailbox-wrapper {
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .mailbox-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .mailbox-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Adjust greeting card for mobile portrait */
+    .greeting-card {
+        flex-direction: column;
+        width: 85%;
+        /* Reduced width */
+        height: auto;
+        /* Auto height to hug content */
+        max-height: 70vh;
+        /* Don't take full screen */
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Top Red Section - Make it shorter */
+    .card-left {
+        flex: 0 0 auto;
+        /* Auto height */
+        height: 180px;
+        /* Fixed smaller height */
+        padding: 10px;
+        border-right: none;
+        border-bottom: 3px solid #ffd700;
+        /* Gold separator */
+    }
+
+    .year-badge-container {
+        width: 100px;
+        height: 100px;
+        border-width: 2px;
+        box-shadow: 0 0 0 3px #b71c1c, 0 0 0 5px #ffd700;
+    }
+
+    .year-text h2 {
+        font-size: 1.2rem;
+    }
+
+    .year-text span {
+        font-size: 1.5rem;
+    }
+
+    .flower {
+        transform: scale(0.6);
+    }
+
+    /* Bottom Paper Section - Translucent */
+    .card-right {
+        flex: 1;
+        padding: 15px;
+        /* Translucent paper to see hints of background */
+        background: rgba(253, 245, 230, 0.95);
+        backdrop-filter: blur(2px);
+    }
+
+    .card-header {
+        margin-bottom: 10px;
+    }
+
+    .card-title-input {
+        font-size: 1.5rem;
+    }
+
+    .wishes-input {
+        font-size: 1.2rem;
+        /* Readable text size */
+        padding: 5px;
+    }
+
+    /* Larger Close Button for Touch */
+    .close-card-btn {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.3);
+        /* Subtle background */
+        border-radius: 50%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Even smaller screens */
+    .greeting-card {
+        height: 80vh;
+        /* Avoid keyboard overlap issues slightly better */
+    }
+
+    .wishes-input {
+        font-size: 1.1rem;
+    }
+}
+
+/* Smooth Open/Close Animation Classes */
+/* Handled by .open class on overlay, but let's refine the card transition */
+.greeting-card {
+    /* Existing styles plus... */
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-out;
+}
+
+.mailbox-modal-overlay.open .greeting-card {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+    /* Lock scroll on iOS */
+    width: 100%;
+}
+
+/* Static Greeting Styles */
+.wishes-text {
+    flex: 1;
+    width: 100%;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: #5d4037;
+    text-align: center;
+    padding: 10px;
+    overflow-y: auto;
+    /* Allow scrolling if text is too long */
+}
+
+@media (max-width: 768px) {
+    .wishes-text {
+        font-size: 1.2rem;
+    }
+}
